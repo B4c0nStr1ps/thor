@@ -1,0 +1,6 @@
+#ifndef ${FILE_HEADER_GUARD}
+#define ${FILE_HEADER_GUARD}
+ 
+
+ 
+#endif // ${FILE_HEADER_GUARD}
