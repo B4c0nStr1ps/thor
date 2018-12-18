@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <malloc.h>
+#include "assertion.h"
 
 namespace Thor
 {
@@ -14,11 +15,12 @@ namespace Thor
 		// must be a power of 2 (typically 4 or 16).
 		void* AllocateAligned(size_t sizeBytes, size_t alignment)
 		{
-			//ASSERT(alignment >= 1);
-			//ASSERT(alignment <= 128);
-			//ASSERT((alignment & (alignment - 1)) == 0); // pwr of 2
+			T_ASSERT(alignment >= 1);
+			T_ASSERT(alignment <= 128);
+			T_ASSERT((alignment & (alignment - 1)) == 0); // pwr of 2
 			// Determine total amount of memory to allocate.
-			size_t expandedSizeBytes = sizeBytes + alignment;			// Allocate unaligned block & convert address to uintptr_t.
+			size_t expandedSizeBytes = sizeBytes + alignment;
+			// Allocate unaligned block & convert address to uintptr_t.
 			uintptr_t rawAddress = reinterpret_cast<uintptr_t>(AllocateUnaligned(expandedSizeBytes));
 			// Calculate the adjustment by masking off the lower bits
 			// of the address, to determine how "misaligned" it is.
@@ -26,8 +28,9 @@ namespace Thor
 			uintptr_t misalignment = (rawAddress & mask);
 			ptrdiff_t adjustment = alignment - misalignment;
 			// Calculate the adjusted address.
-			uintptr_t alignedAddress = rawAddress + adjustment;			// Store the adjustment in the byte immediately preceding the adjusted address.
-			//ASSERT(adjustment < 256);
+			uintptr_t alignedAddress = rawAddress + adjustment;
+			// Store the adjustment in the byte immediately preceding the adjusted address.
+			T_ASSERT(adjustment < 256);
 			typedef unsigned char U8;
 			U8* pAlignedMem = reinterpret_cast<U8*>(alignedAddress);
 			pAlignedMem[-1] = static_cast<U8>(adjustment);
@@ -43,6 +46,7 @@ namespace Thor
 
 		void FreeAligned(void* address)
 		{
+			T_ASSERT(address != nullptr);
 			typedef unsigned char U8;
 			const U8* pAlignedMem = reinterpret_cast<const U8*>(address);
 			uintptr_t alignedAddress = reinterpret_cast<uintptr_t>(address);
@@ -60,7 +64,7 @@ namespace Thor
 
 		void FreeUnaligned(void* address)
 		{
-			//ASSERT(sizeBytes != nullptr);
+			T_ASSERT(address != nullptr);
 			free(address);
 		}
 
@@ -74,6 +78,7 @@ namespace Thor
 		template<typename ElementType>
 		void Delete(ElementType* address)
 		{
+			T_ASSERT(address != nullptr);
 			FreeAligned(address);
 		}
 

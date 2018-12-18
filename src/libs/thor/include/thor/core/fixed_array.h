@@ -1,7 +1,7 @@
 #ifndef THOR_FIXED_ARRAY_H_
 #define THOR_FIXED_ARRAY_H_
  
-#define ASSERT(a) {}
+#include "assertion.h"
 
 namespace Thor
 {
@@ -17,13 +17,13 @@ namespace Thor
 		// Accessors.
 		ElementType& operator[](size_t index)
 		{
-			ASSERT(index < NumElements);
+			T_ASSERT(index < NumElements);
 			return _data[index];
 		}
 
 		const ElementType& operator[](size_t index) const
 		{
-			ASSERT(index < NumElements);
+			T_ASSERT(index < NumElements);
 			return _data[index];
 		}
 
