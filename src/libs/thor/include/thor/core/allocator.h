@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <malloc.h>
- 
+
 namespace Thor
 {
 	struct Allocator
@@ -79,5 +79,5 @@ namespace Thor
 
 	};
 }
- 
+
 #endif // THOR_ALLOCATOR_H_

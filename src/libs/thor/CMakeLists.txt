@@ -9,6 +9,7 @@ set(CPP_SOURCE_LIST "")
 
 addCppHeader(Thor CPP_HEADER_LIST include/thor thor.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core allocator.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core fixed_array.h)
 addCppSource(Thor CPP_SOURCE_LIST source thor.cpp)
 
 buildSourceGroups(CPP_HEADER_LIST)
