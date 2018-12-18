@@ -83,6 +83,8 @@ namespace Thor
 		}
 
 	};
+
+	typedef Allocator DefaultAllocator;
 }
 
 #endif // THOR_ALLOCATOR_H_
