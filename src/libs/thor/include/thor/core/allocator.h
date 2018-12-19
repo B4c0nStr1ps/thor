@@ -13,7 +13,7 @@ namespace Thor
 
 		// Aligned allocation function. IMPORTANT: 'alignment'
 		// must be a power of 2 (typically 4 or 16).
-		void* AllocateAligned(size_t sizeBytes, size_t alignment)
+		void* Allocate(size_t sizeBytes, size_t alignment)
 		{
 			T_ASSERT(alignment >= 1);
 			T_ASSERT(alignment <= 128);
@@ -21,7 +21,7 @@ namespace Thor
 			// Determine total amount of memory to allocate.
 			size_t expandedSizeBytes = sizeBytes + alignment;
 			// Allocate unaligned block & convert address to uintptr_t.
-			uintptr_t rawAddress = reinterpret_cast<uintptr_t>(AllocateUnaligned(expandedSizeBytes));
+			uintptr_t rawAddress = reinterpret_cast<uintptr_t>(malloc(expandedSizeBytes));
 			// Calculate the adjustment by masking off the lower bits
 			// of the address, to determine how "misaligned" it is.
 			size_t mask = (alignment - 1);
@@ -37,13 +37,6 @@ namespace Thor
 			return static_cast<void*>(pAlignedMem);
 		}
 
-		template<typename ElementType>
-		ElementType* AllocateAligned()
-		{
-			auto address = AllocateAligned(sizeof(ElementType), alignof(ElementType));
-			return new (address) ElementType();
-		}
-
 		void FreeAligned(void* address)
 		{
 			T_ASSERT(address != nullptr);
@@ -53,25 +46,13 @@ namespace Thor
 			ptrdiff_t adjustment = static_cast<ptrdiff_t>(pAlignedMem[-1]);
 			uintptr_t rawAddress = alignedAddress - adjustment;
 			void* pRawMem = reinterpret_cast<void*>(rawAddress);
-			FreeUnaligned(pRawMem);
-		}
-
-		void* AllocateUnaligned(size_t sizeBytes)
-		{
-			auto address = malloc(sizeBytes);
-			return address;
-		}
-
-		void FreeUnaligned(void* address)
-		{
-			T_ASSERT(address != nullptr);
-			free(address);
+			free(pRawMem);
 		}
 
 		template<typename ElementType>
 		ElementType* New()
 		{
-			auto address = AllocateAligned(sizeof(ElementType), alignof(ElementType));
+			auto address = Allocate(sizeof(ElementType), alignof(ElementType));
 			return new (address) ElementType();
 		}
 

@@ -8,6 +8,8 @@ set(CPP_HEADER_LIST "")
 set(CPP_SOURCE_LIST "")
 
 addCppHeader(Thor CPP_HEADER_LIST include/thor thor.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core core_types.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core memory.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core assertion.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core allocator.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core fixed_array.h)
