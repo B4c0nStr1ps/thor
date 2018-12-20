@@ -1,9 +1,9 @@
 #ifndef THOR_ALLOCATOR_H_
 #define THOR_ALLOCATOR_H_
 
-#include <cstdint>
 #include <malloc.h>
 #include "assertion.h"
+#include "core_types.h"
 
 namespace Thor
 {
@@ -66,6 +66,21 @@ namespace Thor
 	};
 
 	typedef Allocator DefaultAllocator;
+
+	namespace AllocationPolicies
+	{
+		int32 CalculateGrow(int32 numRequiredElements)
+		{
+			int32 grow = 4;
+			if (numRequiredElements > grow)
+			{
+				//From UE4
+				// Allocate slack for the array proportional to its size.
+				grow = int32(numRequiredElements) + 3 * int32(numRequiredElements) / 8 + 16;
+			}
+			return grow;
+		}
+	}
 }
 
 #endif // THOR_ALLOCATOR_H_

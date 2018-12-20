@@ -35,6 +35,7 @@ namespace Thor
 			Memory::CopyBuffer<ElementType>(m_begin, m_begin, length);
 			m_end = m_begin + length;
 		}
+
 		ArrayList(ArrayList&& other)
 			:m_capacity(other.m_capacity)
 		{
@@ -46,44 +47,52 @@ namespace Thor
 			Memory::MoveBuffer(m_begin, other.m_begin, length);
 			m_end = m_begin + length;
 		}
-		//ArrayList(std::initializer_list<ElementType> elements);
 
-		int Add(ElementType&& item)
+		ArrayList(std::initializer_list<ElementType> elements)
 		{
-			int index = m_end - m_begin;
+			size_t length = elements.size();
+			m_capacity = length;
+			m_begin = DoAllocate(m_capacity);
+			Memory::ConstructItems(m_begin, elements.begin(), length);
+			m_end = m_begin + length;
+		}
 
-			if (index >= m_capacity)
+		FORCEINLINE int Add(ElementType&& item)
+		{
+			return Emplace(std::move(item));
+		}
+
+		FORCEINLINE int Add(const ElementType& item)
+		{
+			return Emplace(item);
+		}
+
+		FORCEINLINE int32 AddUninitialized(int32 count = 1)
+		{
+			T_ASSERT(count > 0);
+			int32 length = Length();
+			if ((length + count) > m_capacity)
 			{
-				DoGrow();
+				ResizeGrow(length + count);
 			}
-
-			new (m_end) ElementType(std::move(item));
 			++m_end;
+			return length;
+		}
+
+		template <typename... ArgsType>
+		FORCEINLINE int32 Emplace(ArgsType&&... Args)
+		{
+			const int32 index = AddUninitialized(1);
+			new (m_begin + index) ElementType(std::forward<ArgsType>(Args)...);
 			return index;
 		}
 
-		int Add(const ElementType& item)
+		int32 Length() const
 		{
-			int index = m_end - m_begin;
-
-			if (index >= m_capacity)
-			{
-				DoGrow();
-			}
-
-			new (m_end) ElementType(item);
-			++m_end;
-			return index;
+			return (int32)(m_end - m_begin);
 		}
 
-		//int32 AddUninitialized(int32 Count = 1);
-
-		int Length() const
-		{
-			return m_end - m_begin;
-		}
-
-		int Capacity() const
+		int32 Capacity() const
 		{
 			return m_capacity;
 		}
@@ -93,25 +102,19 @@ namespace Thor
 			return (m_end - m_begin) == 0;
 		}
 
-		void Reserve(int capacity)
+		void Reserve(int32 capacity)
 		{
 			if (capacity > m_capacity)
 			{
-				DoGrow();
+				Grow(capacity);
 			}
 		}
 
-		//@TODO -> REWORK
 		void Clear()
 		{
-			int32 counter = Length();
-			ElementType* element = m_begin;
-			typedef ElementType DestructItemsElementTypeTypedef;
-			while (counter)
+			if (m_begin != nullptr)
 			{
-				m_begin->DestructItemsElementTypeTypedef::~DestructItemsElementTypeTypedef();
-				++element;
-				--counter;
+				Memory::DestroyItems(m_begin, Length());
 			}
 			m_end = m_begin;
 		}
@@ -127,18 +130,17 @@ namespace Thor
 			m_end = nullptr;
 		}
 
-		void RemoveAt(int index)
+		void RemoveAt(int32 index)
 		{
-			typedef ElementType DestructItemsElementTypeTypedef;
 			T_ASSERT(index < Length());
-			(m_begin + index)->DestructItemsElementTypeTypedef::~DestructItemsElementTypeTypedef();
-			memcpy(m_begin + index, m_end - 1, sizeof(ElementType));
+			Memory::DestroyItems(m_begin + index, 1);
+			Memory::RelocateBuffer(m_begin + index, m_end - 1, 1);
 			--m_end;
 		}
 
-		int Remove(const ElementType& item)
+		int32 Remove(const ElementType& item)
 		{
-			for (int i = 0; i < Length(); ++i)
+			for (int32 i = 0; i < Length(); ++i)
 			{
 				if (item == *(m_begin + i))
 				{
@@ -167,22 +169,30 @@ namespace Thor
 		}
 
 	private:
+
 		ElementType* m_begin;
 		ElementType* m_end;
-		int m_capacity;
+		int32 m_capacity;
 		AllocatorType m_allocator;
 
 	private:
+
 		ElementType* DoAllocate(int itemsCount)
 		{
 			T_ASSERT(itemsCount >= 0);
 			return (ElementType*)m_allocator.Allocate(itemsCount * sizeof(ElementType), alignof(ElementType));
 		}
 
-		void DoGrow()
+		void ResizeGrow(int32 numElements)
 		{
-			m_capacity = m_capacity * 2;
-			void* newAddress = m_allocator.Allocate(m_capacity * sizeof(ElementType), alignof(ElementType));
+			int32 capacity = AllocationPolicies::CalculateGrow(numElements);
+			Grow(capacity);
+		}
+
+		void Grow(int32 capacity)
+		{
+			T_ASSERT(capacity > m_capacity);
+			void* newAddress = m_allocator.Allocate(capacity * sizeof(ElementType), alignof(ElementType));
 			memcpy(newAddress, m_begin, Length() * sizeof(ElementType));
 			int currentLength = Length();
 			if (m_begin != nullptr)
@@ -191,6 +201,7 @@ namespace Thor
 			}			
 			m_begin = (ElementType*)newAddress;
 			m_end = m_begin + currentLength;
+			m_capacity = capacity;
 		}
 	};
 }
