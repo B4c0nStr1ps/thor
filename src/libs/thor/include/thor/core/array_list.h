@@ -32,17 +32,14 @@ namespace Thor
 			m_capacity = other.m_capacity;
 			m_begin = DoAllocate(m_capacity);
 			int32 length = other.Length();
-			Memory::CopyBuffer<ElementType>(m_begin, m_begin, length);
+			Memory::CopyBuffer<ElementType>(m_begin, other.m_begin, length);
 			m_end = m_begin + length;
 		}
 
 		ArrayList(ArrayList&& other)
-			:m_capacity(other.m_capacity)
+			:m_capacity(other.m_capacity), m_begin{ nullptr }, m_end{ nullptr }
 		{
-			if (m_begin != nullptr)
-			{
-				Clear();
-			}
+			m_begin = DoAllocate(m_capacity);
 			int length = other.Length();
 			Memory::MoveBuffer(m_begin, other.m_begin, length);
 			m_end = m_begin + length;
