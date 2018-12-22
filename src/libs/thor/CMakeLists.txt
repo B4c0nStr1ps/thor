@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CPP_HEADER_LIST "")
 set(CPP_SOURCE_LIST "")
+set(OTHER_CONTENT_LIST "")
 
 addCppHeader(Thor CPP_HEADER_LIST include/thor thor.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core core_types.h)
@@ -15,11 +16,12 @@ addCppHeader(Thor CPP_HEADER_LIST include/thor/core allocator.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core fixed_array.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core array_list.h)
 addCppSource(Thor CPP_SOURCE_LIST source thor.cpp)
+addFile(Thor OTHER_CONTENT_LIST "" thor.natvis)
 
 buildSourceGroups(CPP_HEADER_LIST)
 buildSourceGroups(CPP_SOURCE_LIST)
 
-add_library(Thor STATIC ${CPP_SOURCE_LIST} ${CPP_HEADER_LIST})
+add_library(Thor STATIC ${CPP_SOURCE_LIST} ${CPP_HEADER_LIST} ${OTHER_CONTENT_LIST})
 target_include_directories(Thor PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 set_target_properties(Thor PROPERTIES FOLDER Libs)

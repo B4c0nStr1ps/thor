@@ -41,15 +41,14 @@ namespace Thor
 			T_ASSERT(destination != nullptr);
 			T_ASSERT(source != nullptr);
 
-			destination = source;
-			source = nullptr;
+			std::swap(source, destination);
 		}
 
 		template<typename ElementType>
 		FORCEINLINE typename std::enable_if<!std::is_trivially_move_constructible<ElementType>::value>::type
 			MoveBuffer(ElementType* destination, ElementType* source, int64 numElements)
 		{
-			CopyBuffer(destination, source, numElements);
+			CopyBuffer(*destination, source, numElements);
 		}
 
 		template<typename ElementType>

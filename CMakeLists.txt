@@ -37,3 +37,4 @@ set_target_properties(gtest PROPERTIES FOLDER External)
 add_subdirectory(src/libs/thor)
 add_subdirectory(src/apps/dev-app)
 add_subdirectory(src/tests)
+

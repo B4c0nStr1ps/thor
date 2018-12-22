@@ -11,9 +11,39 @@
 
 namespace Thor
 {
-	template<typename ElementType, typename AllocatorType = DefaultAllocator>
+	template<typename InElementType, typename InAllocator = DefaultAllocator>
 	class ArrayList
 	{
+
+	public:
+		typedef InElementType		ElementType;
+		typedef InAllocator			AllocatorType;
+
+	private:
+
+		template<typename SourceArrayType, typename DestinationArrayType>
+		static FORCEINLINE typename std::enable_if<std::is_trivially_move_constructible<typename SourceArrayType::ElementType>::value>::type
+			MoveOrCopy(DestinationArrayType& destination, SourceArrayType& source)
+		{
+			if (destination.m_begin == nullptr)
+			{
+				Memory::DestroyItems(destination.m_begin, destination.Length());
+				destination.m_allocator.FreeAligned(destination.m_begin);
+			}
+			destination.m_begin = source.m_begin;
+			source.m_begin = nullptr;
+			source.m_end = nullptr;
+			source.m_capacity = 0;
+		}
+
+		template<typename SourceArrayType, typename DestinationArrayType>
+		static FORCEINLINE typename std::enable_if<!std::is_trivially_move_constructible<typename SourceArrayType::ElementType>::value>::type
+			MoveOrCopy(DestinationArrayType& destination, SourceArrayType& source)
+		{
+			Memory::CopyBuffer<ElementType>(destination.m_begin, source.m_begin, source.Length());
+		}
+
+
 	public:
 
 		ArrayList()
@@ -37,11 +67,11 @@ namespace Thor
 		}
 
 		ArrayList(ArrayList&& other)
-			:m_capacity(other.m_capacity), m_begin{ nullptr }, m_end{ nullptr }
 		{
+			m_capacity = other.m_capacity;
 			m_begin = DoAllocate(m_capacity);
 			int length = other.Length();
-			Memory::MoveBuffer(m_begin, other.m_begin, length);
+			MoveOrCopy(*this, other);
 			m_end = m_begin + length;
 		}
 

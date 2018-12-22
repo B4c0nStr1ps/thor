@@ -50,3 +50,26 @@ TEST(TestsArrayList, MoveCtor) {
 	EXPECT_EQ(collection2[3], 404);
 	EXPECT_TRUE(collection1.Data() == nullptr);
 }
+
+TEST(TestsArrayList, Operations) {
+	Thor::ArrayList<int> collection(10);
+	collection.Add(101);
+	collection.Add(303);
+	EXPECT_EQ(collection[0], 101);
+	EXPECT_EQ(collection[1], 303);
+	EXPECT_EQ(collection.Capacity(), 10);
+	EXPECT_EQ(collection.Length(), 2);
+
+	Thor::ArrayList<int> collection1(10);
+	for (int i = 0; i < 10; ++i)
+	{
+		collection1.Add((100 * (i + 1)) + i + 1);
+	}
+	EXPECT_EQ(collection1.Capacity(), 10);
+	EXPECT_EQ(collection1.Length(), 10);
+	collection1.RemoveAt(3);
+	int compareValue = (100 * (9 + 1)) + 9 + 1;
+	EXPECT_EQ(collection1[3], compareValue);
+	EXPECT_EQ(collection1.Capacity(), 10);
+	EXPECT_EQ(collection1.Length(), 9);
+}

@@ -55,6 +55,22 @@ function(addCppSource prjName targetList relativeBasePath filename)
     endif()    
 endfunction()
 
+function(addFile prjName targetList relativeBasePath filename)
+    if("${relativeBasePath}" STREQUAL "")
+        SET(CURRENT_SOURCE_FILE_REL_PATH "${filename}")
+    else()
+        SET(CURRENT_SOURCE_FILE_REL_PATH "${relativeBasePath}/${filename}")
+    endif()    
+    STRING(REPLACE "//" "/" CURRENT_SOURCE_FILE_REL_PATH ${CURRENT_SOURCE_FILE_REL_PATH})
+    if("${${targetList}}" STREQUAL "")
+    SET(NEW_LIST "${CURRENT_SOURCE_FILE_REL_PATH}")
+    else()
+    SET(NEW_LIST "${${targetList}};${CURRENT_SOURCE_FILE_REL_PATH}")
+    endif()
+    set("${targetList}" "${NEW_LIST}" PARENT_SCOPE)
+endfunction()
+
+
 
 macro(buildSourceGroups files)
     foreach(file ${${files}})
