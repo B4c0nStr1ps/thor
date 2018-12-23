@@ -73,3 +73,17 @@ TEST(TestsArrayList, Operations) {
 	EXPECT_EQ(collection1.Capacity(), 10);
 	EXPECT_EQ(collection1.Length(), 9);
 }
+
+TEST(TestsArrayList, RangeLoop) {
+	Thor::ArrayList<int> collection(4);
+	collection.Add(101);
+	collection.Add(102);
+	collection.Add(103);
+	collection.Add(104);
+	int counter = 101;
+	for (auto it : collection)
+	{
+		EXPECT_EQ(it, counter);
+		++counter;
+	}
+}

@@ -11,13 +11,49 @@
 
 namespace Thor
 {
+	template<typename ElementType>
+	class StlRangeIterator
+	{
+	public:
+		explicit StlRangeIterator(ElementType* pointer)
+			:m_ptr(pointer)
+		{}
+
+		FORCEINLINE ElementType& operator*() const
+		{
+			return *m_ptr;
+		}
+
+		FORCEINLINE StlRangeIterator& operator++()
+		{
+			++m_ptr;
+			return *this;
+		}
+
+		FORCEINLINE StlRangeIterator& operator--()
+		{
+			--m_ptr;
+			return *this;
+		}
+
+	private:
+		ElementType* m_ptr;
+
+		FORCEINLINE friend bool operator!=(const StlRangeIterator& lhs, const StlRangeIterator& rhs)
+		{
+			return lhs.m_ptr != rhs.m_ptr;
+		}
+	};
+	
 	template<typename InElementType, typename InAllocator = DefaultAllocator>
 	class ArrayList
 	{
 
 	public:
-		typedef InElementType		ElementType;
-		typedef InAllocator			AllocatorType;
+		typedef InElementType						ElementType;
+		typedef InAllocator							AllocatorType;
+		typedef StlRangeIterator<ElementType>		RangeForIteratorType;
+		typedef StlRangeIterator<const ElementType>	RangeForConstIteratorType;
 
 	private:
 
@@ -230,7 +266,16 @@ namespace Thor
 			m_end = m_begin + currentLength;
 			m_capacity = capacity;
 		}
+
+	private:
+
+		FORCEINLINE friend RangeForIteratorType begin(ArrayList& collection) { return RangeForIteratorType(collection.Data()); }
+		FORCEINLINE friend RangeForConstIteratorType begin(const ArrayList& collection) { return RangeForConstIteratorType(collection.Data()); }
+		FORCEINLINE friend RangeForIteratorType end(ArrayList& collection) { return RangeForIteratorType(collection.Data() + collection.Length()); }
+		FORCEINLINE friend RangeForConstIteratorType end(const ArrayList& collection) { return RangeForConstIteratorType(collection.Data() + collection.Length()); }
+
 	};
+
 }
 
 #endif // THOR_ARRAY_LIST_H_
