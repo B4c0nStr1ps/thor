@@ -13,7 +13,7 @@ Thor::String Thor::StringUtils::FormatImplementation(const ANSICHAR* format, ...
 	va_list args;
 	va_start(args, format);
 	//int32 result = _vsnprintf(buffer, bufferSize - 1, format, args);
-	int32 result = PlatformString::StringFormatImpl(buffer, bufferSize, bufferSize - 1, format, args);
+	int32 result = Platform::String::StringFormatImpl(buffer, bufferSize, bufferSize - 1, format, args);
 	va_end(args);
 
 	if (result < 0)
@@ -32,7 +32,7 @@ Thor::String Thor::StringUtils::FormatImplementation(const ANSICHAR* format, ...
 		va_list args;
 		va_start(args, format);
 		//result = _vsnprintf(buffer, bufferSize - 1, format, args);
-		result = PlatformString::StringFormatImpl(buffer, bufferSize, bufferSize - 1, format, args);
+		result = Platform::String::StringFormatImpl(buffer, bufferSize, bufferSize - 1, format, args);
 		va_end(args);
 	}
 
