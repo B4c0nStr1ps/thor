@@ -17,12 +17,12 @@ addCppHeader(Thor CPP_HEADER_LIST include/thor/core fixed_array.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core array_list.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core string.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core string_utils.h)
-addCppHeader(Thor CPP_HEADER_LIST include/thor/core thor_traits.h)
 #core/platform
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform windows_platform_api.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform_string.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform_time.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform_type_traits.h)
 
 addCppSource(Thor CPP_SOURCE_LIST source thor.cpp)
 #core

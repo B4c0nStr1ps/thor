@@ -2,8 +2,8 @@
 #define THOR_STRING_H_
 
 #include "platform/platform.h"
+#include "platform/platform_type_traits.h"
 #include "platform/platform_string.h"
-#include "thor_traits.h"
 #include "array_list.h" 
 
 namespace Thor
@@ -24,7 +24,7 @@ namespace Thor
 		String& operator=(String&&) = default;
 		String& operator=(const String&) = default;
 
-		template<typename InCharType, typename = typename std::enable_if<TypeTraits::IsCharType<InCharType>::value>>
+		template<typename InCharType, typename = typename std::enable_if<Platform::TypeTraits::IsCharType<InCharType>::value>>
 		String(const InCharType* source)
 		{
 			int32 length = Platform::String::Strlen(source) + 1; //+1 for null terminator.
@@ -41,7 +41,7 @@ namespace Thor
 			return *this;
 		}
 
-		template<typename InCharType, typename = typename std::enable_if<TypeTraits::IsCharType<InCharType>::value>>
+		template<typename InCharType, typename = typename std::enable_if<Platform::TypeTraits::IsCharType<InCharType>::value>>
 		FORCEINLINE String& operator=(const InCharType* other)
 		{
 			m_data.Clear();

@@ -4,18 +4,12 @@
 
 
 #include "platform.h"
-#include "../thor_traits.h"
+#include "platform_type_traits.h"
 #include "../memory.h"
 #include <stdlib.h>
 
 namespace Thor
 {
-	namespace TypeTraits
-	{
-		template<> struct IsCharType<ANSICHAR> { enum { value = true }; };
-		template<> struct IsCharType<WIDECHAR> { enum { value = true }; };
-	}
-
 	namespace Platform
 	{
 		namespace String

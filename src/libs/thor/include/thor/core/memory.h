@@ -2,9 +2,9 @@
 #define THOR_MEMORY_H_
  
 #include "platform/platform.h"
+#include "platform/platform_type_traits.h"
 #include "assertion.h"
 
-#include <type_traits>
 #include <memory>
 
 namespace Thor
