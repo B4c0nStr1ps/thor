@@ -2,7 +2,7 @@
 #define THOR_STRING_H_
 
 #include "core_types.h"
-#include "hal/platform_string.h"
+#include "platform/platform_string.h"
 #include "thor_traits.h"
 #include "array_list.h" 
 

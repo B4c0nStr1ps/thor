@@ -1,4 +1,4 @@
-#include <thor/core/hal/platform_string.h>
+#include <thor/core/platform/platform_string.h>
 #include <string.h>
 
 int32 Thor::PlatformString::Strlen(const ANSICHAR* string)

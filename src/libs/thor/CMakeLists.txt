@@ -19,20 +19,20 @@ addCppHeader(Thor CPP_HEADER_LIST include/thor/core array_list.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core string.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core string_utils.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core thor_traits.h)
-#core/hal
-addCppHeader(Thor CPP_HEADER_LIST include/thor/core/hal platform.h)
-addCppHeader(Thor CPP_HEADER_LIST include/thor/core/hal windows_platform_api.h)
-addCppHeader(Thor CPP_HEADER_LIST include/thor/core/hal platform_string.h)
-addCppHeader(Thor CPP_HEADER_LIST include/thor/core/hal platform_time.h)
+#core/platform
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform windows_platform_api.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform_string.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform_time.h)
 
 addCppSource(Thor CPP_SOURCE_LIST source thor.cpp)
 #core
 addCppSource(Thor CPP_SOURCE_LIST source/core allocator.cpp)
 addCppSource(Thor CPP_SOURCE_LIST source/core memory.cpp)
 addCppSource(Thor CPP_SOURCE_LIST source/core string_utils.cpp)
-#core/hal
-addCppSource(Thor CPP_SOURCE_LIST source/core/hal platform_string.cpp)
-addCppSource(Thor CPP_SOURCE_LIST source/core/hal platform_time.cpp)
+#core/platform
+addCppSource(Thor CPP_SOURCE_LIST source/core/platform platform_string.cpp)
+addCppSource(Thor CPP_SOURCE_LIST source/core/platform platform_time.cpp)
 
 addFile(Thor OTHER_CONTENT_LIST "" thor.natvis)
 

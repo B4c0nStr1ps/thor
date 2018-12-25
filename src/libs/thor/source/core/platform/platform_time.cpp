@@ -1,5 +1,5 @@
-#include <thor/core/hal/platform_time.h>
-#include <thor/core/hal/windows_platform_api.h>
+#include <thor/core/platform/platform_time.h>
+#include <thor/core/platform/windows_platform_api.h>
 #include <thor/core/assertion.h>
 
 namespace Thor

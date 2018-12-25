@@ -1,6 +1,6 @@
 #include <thor/thor.h>
 #include <thor/core/memory.h>
-#include <thor/core/hal/platform_time.h>
+#include <thor/core/platform/platform_time.h>
 
 int main()
 {
