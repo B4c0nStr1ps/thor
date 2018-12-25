@@ -1,7 +1,7 @@
 #ifndef THOR_STRING_H_
 #define THOR_STRING_H_
 
-#include "core_types.h"
+#include "platform/platform.h"
 #include "platform/platform_string.h"
 #include "thor_traits.h"
 #include "array_list.h" 

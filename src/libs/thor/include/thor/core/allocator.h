@@ -3,7 +3,7 @@
 
 #include <malloc.h>
 #include "assertion.h"
-#include "core_types.h"
+#include "platform/platform.h"
 
 namespace Thor
 {

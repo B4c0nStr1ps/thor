@@ -1,11 +1,9 @@
 #ifndef THOR_PLATFORM_STRING_H_
 #define THOR_PLATFORM_STRING_H_
 
-typedef char			ANSICHAR;	// An ANSI character - 8-bit fixed-width representation of 7-bit characters.
-typedef wchar_t			WIDECHAR;	// A wide character
+
 
 #include "platform.h"
-#include "../core_types.h"
 #include "../thor_traits.h"
 #include "../memory.h"
 #include <stdlib.h>

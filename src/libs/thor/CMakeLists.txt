@@ -10,7 +10,6 @@ set(OTHER_CONTENT_LIST "")
 
 addCppHeader(Thor CPP_HEADER_LIST include/thor thor.h)
 #core
-addCppHeader(Thor CPP_HEADER_LIST include/thor/core core_types.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core memory.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core assertion.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core allocator.h)

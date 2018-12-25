@@ -1,7 +1,7 @@
 #ifndef THOR_MEMORY_H_
 #define THOR_MEMORY_H_
  
-#include "core_types.h"
+#include "platform/platform.h"
 #include "assertion.h"
 
 #include <type_traits>

@@ -1,9 +1,9 @@
 #ifndef THOR_ARRAY_LIST_H_
 #define THOR_ARRAY_LIST_H_
 
+#include "platform/platform.h"
 #include "assertion.h"
 #include "allocator.h"
-#include "core_types.h"
 #include "memory.h" 
 
 #include <initializer_list>

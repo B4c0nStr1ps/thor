@@ -1,7 +1,7 @@
 #ifndef THOR_THOR_TRAITS_H_
 #define THOR_THOR_TRAITS_H_
 
-#include "core_types.h"
+#include "platform/platform.h"
 #include <type_traits>
 
 namespace Thor
