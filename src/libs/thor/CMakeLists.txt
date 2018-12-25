@@ -9,13 +9,28 @@ set(CPP_SOURCE_LIST "")
 set(OTHER_CONTENT_LIST "")
 
 addCppHeader(Thor CPP_HEADER_LIST include/thor thor.h)
+#core
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core core_types.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core memory.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core assertion.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core allocator.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core fixed_array.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core array_list.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core string.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core string_utils.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core thor_traits.h)
+#core/hal
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core/hal platform.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core/hal platform_string.h)
+
 addCppSource(Thor CPP_SOURCE_LIST source thor.cpp)
+#core
+addCppSource(Thor CPP_SOURCE_LIST source/core allocator.cpp)
+addCppSource(Thor CPP_SOURCE_LIST source/core memory.cpp)
+addCppSource(Thor CPP_SOURCE_LIST source/core string_utils.cpp)
+#core/hal
+addCppSource(Thor CPP_SOURCE_LIST source/core/hal platform_string.cpp)
+
 addFile(Thor OTHER_CONTENT_LIST "" thor.natvis)
 
 buildSourceGroups(CPP_HEADER_LIST)

@@ -16,4 +16,20 @@ typedef unsigned char	byte;
 #define FORCEINLINE __forceinline									/* Force code to be inline */
 #define FORCENOINLINE __declspec(noinline)							/* Force code to NOT be inline */
 
+// DLL export and import definitions
+//#define DLLEXPORT __declspec(dllexport)
+//#define DLLIMPORT __declspec(dllimport)
+// If we are Microsoft C/C++ Compiler
+#if defined(_MSC_VER)
+#if defined(DLL_EXPORT)
+#define API __declspec(dllexport)
+#else
+#define API __declspec(dllimport)
+#endif
+
+// If we are non Windows (Export by default) or compiling to a StaticLibrary
+#else
+#define API 
+#endif
+
 #endif // THOR_CORE_TYPES_H_

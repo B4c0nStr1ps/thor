@@ -100,6 +100,9 @@ namespace Thor
 			memcpy(destination, source, numElements * sizeof(ElementType));
 		}
 
+		void* Memcpy(void* destination, const void* source, size_t size);
+
+		int TestAA();
 	}
 }
  

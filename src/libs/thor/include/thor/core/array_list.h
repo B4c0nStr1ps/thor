@@ -138,7 +138,7 @@ namespace Thor
 			{
 				ResizeGrow(length + count);
 			}
-			++m_end;
+			m_end += count;
 			return length;
 		}
 
