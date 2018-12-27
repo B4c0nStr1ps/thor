@@ -13,7 +13,7 @@ buildSourceGroups(CPP_SOURCE_LIST)
 
 message("CPP_SOURCE_LIST-> ${CPP_SOURCE_LIST}")
 
-add_executable(DevApp ${CPP_SOURCE_LIST} ${CPP_HEADER_LIST})
+add_executable(DevApp WIN32 ${CPP_SOURCE_LIST} ${CPP_HEADER_LIST})
 target_link_libraries(DevApp PRIVATE Thor)
 
 set_target_properties(DevApp PROPERTIES FOLDER Apps)

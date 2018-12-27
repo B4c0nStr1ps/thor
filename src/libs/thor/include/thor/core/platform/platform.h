@@ -51,4 +51,7 @@ typedef wchar_t				WIDECHAR;	// A wide character
 #define API 
 #endif
 
+//include default std librs
+#include <memory> // for smart pointers
+
 #endif // THOR_PLATFORM_H_

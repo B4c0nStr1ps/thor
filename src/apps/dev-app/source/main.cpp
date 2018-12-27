@@ -1,14 +1,9 @@
-#include <thor/thor.h>
-#include <thor/core/memory.h>
-#include <thor/core/platform/platform_time.h>
 
-int main()
+#include <thor/core/platform/platform.h>
+#include <thor/core/platform/windows_platform_api.h>
+#include <thor/engine.h>
+
+int32 WINAPI WinMain(_In_ HINSTANCE hInInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ char* cmdLine, _In_ int32 nCmdShow)
 {
-	double secondsPerCycle = Thor::Platform::Time::GetSecondsPerCycle();
-	double seconds1 = Thor::Platform::Time::Seconds();
-	_sleep(500);
-	double seconds2 = Thor::Platform::Time::Seconds();
-	double dt = seconds2 - seconds1;
-	float fdt = seconds2 - seconds1;
-	return 0;
+	return Thor::ThorMain(hInInstance, hPrevInstance, cmdLine, nCmdShow);
 }
