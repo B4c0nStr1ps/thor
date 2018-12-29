@@ -17,6 +17,7 @@ addCppHeader(Thor CPP_HEADER_LIST include/thor/core fixed_array.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core array_list.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core string.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core string_utils.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core diagnostics.h)
 #core/platform
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform windows_platform_api.h)
