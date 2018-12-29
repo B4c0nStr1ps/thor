@@ -5,10 +5,17 @@
 #include "string.h"
 #include "string_utils.h"
 
-#define THOR_TRACE(verbosity, format, ...) \
+#define THOR_TRACE(listener, verbosity, format, ...) \
 { \
 	Thor::Diagnostics::Trace(__FILE__, __LINE__, verbosity, format,  ##__VA_ARGS__); \
 }
+
+#define THOR_DEFINE_TRACE_LISTENER_STATIC(listenerName) \
+static class TraceListener##listenerName \
+{ \
+public: \
+	FORCEINLINE TraceListener##listenerName() {}\
+} listenerName;
 
 namespace Thor
 {
