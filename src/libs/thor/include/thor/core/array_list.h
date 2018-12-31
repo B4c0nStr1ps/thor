@@ -45,7 +45,7 @@ namespace Thor
 		}
 	};
 	
-	template<typename InElementType, typename InAllocator = DefaultAllocator>
+	template<typename InElementType, typename InAllocator = Allocators::DefaultAllocator>
 	class ArrayList
 	{
 
@@ -64,7 +64,7 @@ namespace Thor
 			if (destination.m_begin == nullptr)
 			{
 				Memory::DestroyItems(destination.m_begin, destination.Length());
-				destination.m_allocator.FreeAligned(destination.m_begin);
+				destination.m_allocator.Free(destination.m_begin);
 			}
 			destination.m_begin = source.m_begin;
 			source.m_begin = nullptr;
@@ -187,7 +187,7 @@ namespace Thor
 			Clear();
 			if (m_begin != nullptr)
 			{
-				m_allocator.FreeAligned(m_begin);
+				m_allocator.Free(m_begin);
 			}
 			m_begin = nullptr;
 			m_end = nullptr;
@@ -248,7 +248,7 @@ namespace Thor
 
 		void ResizeGrow(int32 numElements)
 		{
-			int32 capacity = AllocationPolicies::CalculateGrow(numElements);
+			int32 capacity = Allocators::AllocationPolicies::CalculateGrow(numElements);
 			Grow(capacity);
 		}
 
@@ -260,7 +260,7 @@ namespace Thor
 			int currentLength = Length();
 			if (m_begin != nullptr)
 			{
-				m_allocator.FreeAligned(m_begin);
+				m_allocator.Free(m_begin);
 			}			
 			m_begin = (ElementType*)newAddress;
 			m_end = m_begin + currentLength;

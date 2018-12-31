@@ -39,7 +39,6 @@ namespace Thor
 			case TraceVerbosity::Error:
 				return "ERROR";
 			default:
-				break;
 				return "UNKOWN VERBOSITY";
 			}
 		}

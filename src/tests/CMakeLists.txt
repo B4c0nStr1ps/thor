@@ -9,6 +9,7 @@ set(CPP_SOURCE_LIST "")
 addCppSource(ThorTester CPP_SOURCE_LIST "" main.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_array_list.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_strings.cpp)
+addCppSource(ThorTester CPP_SOURCE_LIST "" tests_shared_refs.cpp)
 
 add_executable(ThorTester ${CPP_SOURCE_LIST} ${CPP_HEADER_LIST})
 target_link_libraries(ThorTester PRIVATE Thor)

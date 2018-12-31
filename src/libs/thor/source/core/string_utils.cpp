@@ -22,7 +22,7 @@ Thor::String Thor::StringUtils::FormatImplementation(const ANSICHAR* format, ...
 		return Thor::String();
 	}
 	
-	DefaultAllocator allocator;
+	Allocators::HeapAllocator allocator;
 
 	if (result >= bufferSize)
 	{
@@ -40,7 +40,7 @@ Thor::String Thor::StringUtils::FormatImplementation(const ANSICHAR* format, ...
 	Thor::String formattedString(buffer);
 	if (result >= bufferSize)
 	{
-		allocator.FreeAligned(buffer);
+		allocator.Free(buffer);
 	}
 	return formattedString;
 }

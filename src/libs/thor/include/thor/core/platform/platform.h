@@ -30,6 +30,8 @@ typedef unsigned char		byte;
 typedef char				ANSICHAR;	// An ANSI character - 8-bit fixed-width representation of 7-bit characters.
 typedef wchar_t				WIDECHAR;	// A wide character
 
+typedef decltype(nullptr)	NULLPTRTYPE;
+
 // Function type macros.
 #define CDECL	    __cdecl											/* Standard C function */
 #define STDCALL		__stdcall										/* Standard calling convention */

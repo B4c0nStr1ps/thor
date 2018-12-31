@@ -1,6 +1,8 @@
 #include <thor/core/allocator.h>
 
-int32 Thor::AllocationPolicies::CalculateGrow(int32 numRequiredElements)
+
+
+int32 Thor::Allocators::AllocationPolicies::CalculateGrow(int32 numRequiredElements)
 {
 	int32 grow = 4;
 	if (numRequiredElements > grow)
