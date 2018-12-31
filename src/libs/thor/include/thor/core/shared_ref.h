@@ -162,7 +162,7 @@ namespace Thor
 		RefCountInstance(AllocatorType allocator, Args&&... args)
 			: RefCount(), m_allocator(std::move(allocator))
 		{
-			new (&m_storage) ValueType(std::forward<Args>(args)...);
+			new ((void*)&m_storage) ValueType(std::forward<Args>(args)...);
 		}
 
 		ValueType* GetValue()
@@ -198,7 +198,12 @@ namespace Thor
 
 	public:
 		SharedRef() noexcept
-			:m_pointer(nullptr), m_refCounter(nullptr) {}
+			:m_pointer(nullptr), m_refCounter(nullptr) 
+		{}
+
+		SharedRef(NULLPTRTYPE) noexcept
+			:m_pointer(nullptr), m_refCounter(nullptr)
+		{}
 
 		template <typename U>
 		explicit SharedRef(U* pointer, typename std::enable_if<std::is_convertible<U*, ElementType*>::value, U>::type* = 0) 
@@ -408,12 +413,20 @@ namespace Thor
 		typedef RefCountInstance<T, AllocatorType> RefCountType;
 		AllocatorType allocator;
 		SharedRef<T> ret;
-		void* const memory = allocator.Allocate(sizeof(RefCountType));
-		if (memory)
-		{
-			RefCountType* refCount = new (memory) RefCountType(allocator, std::forward<Args>(args)...);
-			AllocateSharedRefHelper(ret, refCount, refCount->GetValue());
-		}
+		RefCountType* refCount = allocator.New<RefCountType>(allocator, std::forward<Args>(args)...);
+		AllocateSharedRefHelper(ret, refCount, refCount->GetValue());
+		return ret;
+	}
+
+	template <typename T>
+	SharedRef<T> MakeShared()
+	{
+		typedef Allocators::DefaultAllocator AllocatorType;
+		typedef RefCountInstance<T, AllocatorType> RefCountType;
+		AllocatorType allocator;
+		SharedRef<T> ret;
+		RefCountType* refCount = allocator.New<RefCountType>(allocator);
+		AllocateSharedRefHelper(ret, refCount, refCount->GetValue());
 		return ret;
 	}
 }

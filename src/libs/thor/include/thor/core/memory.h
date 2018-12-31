@@ -5,8 +5,6 @@
 #include "platform/platform_type_traits.h"
 #include "assertion.h"
 
-#include <memory>
-
 namespace Thor
 {
 	namespace Memory
@@ -18,7 +16,7 @@ namespace Thor
 			T_ASSERT(destination != nullptr);
 			T_ASSERT(source != nullptr);
 
-			memcpy(destination, source, numElements * sizeof(ElementType));
+			Memcpy(destination, source, numElements * sizeof(ElementType));
 		}
 
 		template<typename  ElementType>
@@ -77,7 +75,7 @@ namespace Thor
 		FORCEINLINE void RelocateBuffer(ElementType* destination, ElementType* source, int64 numElements)
 		{
 			T_ASSERT(destination != source);
-			memcpy(destination, source, numElements * sizeof(ElementType));
+			Memcpy(destination, source, numElements * sizeof(ElementType));
 		}
 
 		template<typename ElementType>
@@ -97,12 +95,16 @@ namespace Thor
 		FORCEINLINE typename std::enable_if<std::is_trivially_constructible<ElementType>::value>::type
 			ConstructItems(void* destination, const ElementType* source, int32 numElements)
 		{
-			memcpy(destination, source, numElements * sizeof(ElementType));
+			Memcpy(destination, source, numElements * sizeof(ElementType));
 		}
 
 		void* Memcpy(void* destination, const void* source, size_t size);
 
-		int TestAA();
+		void* Malloc(size_t size, size_t alignment);
+
+		void Free(void* source);
+
+		size_t DebugGetMallocCount();
 	}
 }
  

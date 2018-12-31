@@ -1,9 +1,9 @@
 #include "thor/core/platform/windows_window.h"
 
 
-std::shared_ptr<Thor::Platform::WindowsWindow> Thor::Platform::WindowsWindow::Make()
+Thor::SharedRef<Thor::Platform::WindowsWindow> Thor::Platform::WindowsWindow::Make()
 {
-	auto window = std::make_shared<WindowsWindow>();
+	auto window = Thor::MakeShared<WindowsWindow>();
 	return window;
 }
 

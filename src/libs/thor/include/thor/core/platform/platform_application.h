@@ -4,6 +4,7 @@
 #include "platform.h"
 #include "windows_platform_api.h"
 #include "windows_window.h"
+#include "../shared_ref.h"
 
 namespace Thor
 {
@@ -14,7 +15,7 @@ namespace Thor
 
 		public:
 
-			static std::shared_ptr<Application> CreateApplication();
+			static Thor::SharedRef<Application> CreateApplication();
 
 			static void PumMessages();
 
@@ -40,7 +41,7 @@ namespace Thor
 		private:
 			HINSTANCE m_instanceHandle;
 
-			std::shared_ptr<WindowsWindow> m_mainWindow;
+			Thor::SharedRef<WindowsWindow> m_mainWindow;
 		};
 	}
 }

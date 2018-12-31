@@ -2,15 +2,15 @@
 #include "thor/core/platform/windows_window.h"
 
 //declare global instance
-std::shared_ptr<Thor::Platform::Application> MainApplication = nullptr;
+Thor::SharedRef<Thor::Platform::Application> MainApplication = nullptr;
 
 const ANSICHAR Thor::Platform::Application::AppWindowClass[] = "ThorAppWindow";
 
-std::shared_ptr<Thor::Platform::Application> Thor::Platform::Application::CreateApplication()
+Thor::SharedRef<Thor::Platform::Application> Thor::Platform::Application::CreateApplication()
 {	
 	HINSTANCE ownerInstance = (HINSTANCE)GetModuleHandle(NULL);
 	Application::RegisterWinClass(ownerInstance);
-	MainApplication = std::make_shared<Application>();
+	MainApplication = Thor::MakeShared<Application>();
 	MainApplication->m_instanceHandle = ownerInstance;
 	return MainApplication;
 }

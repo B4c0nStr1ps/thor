@@ -53,7 +53,4 @@ typedef decltype(nullptr)	NULLPTRTYPE;
 #define API 
 #endif
 
-//include default std librs
-#include <memory> // for smart pointers
-
 #endif // THOR_PLATFORM_H_

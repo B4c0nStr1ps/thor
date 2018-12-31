@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include <thor/core/shared_ref.h>
 
-Thor::Allocators::DefaultAllocator G_ALLOC;
-
 struct SharedRefTester
 {
 	bool* controller;
@@ -41,24 +39,23 @@ public:
 bool SharedRefTesterB::Constructed = false;
 
 TEST(TestsSharedRefs, Ctors) {
-	void* memoryAddress = G_ALLOC.Allocate(sizeof(int));
-	int* value = new(memoryAddress) int(101);
+	
+	int* value = new int(101);
+
 	Thor::SharedRef<int> intRef(value);
 	EXPECT_EQ(intRef.UseCount(), 1);
 	Thor::SharedRef<int> intRef2(intRef);
 	EXPECT_EQ(intRef.UseCount(), 2);
 	EXPECT_EQ(intRef2.UseCount(), 2);
 	EXPECT_EQ(*intRef, 101);	
-	void* memoryAddress2 = G_ALLOC.Allocate(sizeof(int));
-	Thor::SharedRef<int> intRef3(new(memoryAddress2) int(202));
+	Thor::SharedRef<int> intRef3(new int(202));
 	EXPECT_EQ(intRef3.UseCount(), 1);
 }
 
 TEST(TestsSharedRefs, Destructor) {
 	bool statusCheck = false;
 
-	void* memoryAddress = G_ALLOC.Allocate(sizeof(SharedRefTester));
-	SharedRefTester* raw = new (memoryAddress) SharedRefTester(&statusCheck);
+	SharedRefTester* raw = new SharedRefTester(&statusCheck);
 
 	EXPECT_EQ(statusCheck, true);
 	{

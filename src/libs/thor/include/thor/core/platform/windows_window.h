@@ -3,6 +3,7 @@
 
 #include "platform.h"
 #include "windows_platform_api.h"
+#include "../shared_ref.h"
  
 namespace Thor
 {
@@ -13,7 +14,7 @@ namespace Thor
 
 		public:
 
-			static std::shared_ptr<WindowsWindow> Make();
+			static Thor::SharedRef<WindowsWindow> Make();
 
 			static POINT CenterWindow(int32 width, int32 height);
 

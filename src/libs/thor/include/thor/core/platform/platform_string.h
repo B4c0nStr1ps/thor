@@ -7,6 +7,7 @@
 #include "platform_type_traits.h"
 #include "../memory.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 namespace Thor
 {
