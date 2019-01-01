@@ -19,6 +19,7 @@ addCppHeader(Thor CPP_HEADER_LIST include/thor/core string.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core shared_ref.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core string_utils.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core diagnostics.h)
+addCppHeader(Thor CPP_HEADER_LIST include/thor/core hash_id.h)
 #core/platform
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform platform.h)
 addCppHeader(Thor CPP_HEADER_LIST include/thor/core/platform windows_platform_api.h)
