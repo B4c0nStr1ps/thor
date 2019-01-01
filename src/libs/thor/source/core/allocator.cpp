@@ -3,7 +3,7 @@
 //#include <new>
 
 //Overload global new
-/*
+
 void* operator new(size_t size)
 {
 	return Thor::Memory::Malloc(size, Thor::Allocators::K_DEFAULT_ALIGNMENT);
@@ -54,7 +54,7 @@ void operator delete[](void* memoryAddress) noexcept
 {
 	Thor::Memory::Free(memoryAddress);
 }
-*/
+
 int32 Thor::Allocators::AllocationPolicies::CalculateGrow(int32 numRequiredElements)
 {
 	int32 grow = 4;

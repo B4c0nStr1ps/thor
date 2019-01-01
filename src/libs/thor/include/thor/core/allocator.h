@@ -5,6 +5,19 @@
 #include "assertion.h"
 #include "memory.h"
 
+#include <new>
+
+void* operator new(size_t size);
+void* operator new[](size_t size);
+void* operator new(size_t size, size_t alignment);
+void* operator new(size_t size, size_t alignment, const std::nothrow_t&) noexcept;
+void* operator new[](size_t size, size_t alignment);
+void* operator new[](size_t size, size_t alignment, const std::nothrow_t&) noexcept;
+void operator delete(void* memoryAddress, std::size_t size) noexcept;
+void operator delete[](void* memoryAddress, std::size_t size) noexcept;
+void operator delete(void* memoryAddress) noexcept;
+void operator delete[](void* memoryAddress) noexcept;
+
 namespace Thor
 {	
 	namespace Allocators

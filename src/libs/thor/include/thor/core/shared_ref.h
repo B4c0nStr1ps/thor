@@ -417,18 +417,6 @@ namespace Thor
 		AllocateSharedRefHelper(ret, refCount, refCount->GetValue());
 		return ret;
 	}
-
-	template <typename T>
-	SharedRef<T> MakeShared()
-	{
-		typedef Allocators::DefaultAllocator AllocatorType;
-		typedef RefCountInstance<T, AllocatorType> RefCountType;
-		AllocatorType allocator;
-		SharedRef<T> ret;
-		RefCountType* refCount = allocator.New<RefCountType>(allocator);
-		AllocateSharedRefHelper(ret, refCount, refCount->GetValue());
-		return ret;
-	}
 }
 #endif // THOR_SHARED_REF_H_
 
