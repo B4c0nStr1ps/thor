@@ -1,5 +1,5 @@
-#ifndef THOR_SHARED_REF_H_
-#define THOR_SHARED_REF_H_
+#ifndef THOR_SMART_POINTERS_H_
+#define THOR_SMART_POINTERS_H_
 
 #include "allocator.h"
 #include "memory.h"
@@ -418,5 +418,5 @@ namespace Thor
 		return ret;
 	}
 }
-#endif // THOR_SHARED_REF_H_
+#endif // THOR_SMART_POINTERS_H_
 

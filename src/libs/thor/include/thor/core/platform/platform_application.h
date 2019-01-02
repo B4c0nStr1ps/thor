@@ -4,7 +4,7 @@
 #include "platform.h"
 #include "windows_platform_api.h"
 #include "windows_window.h"
-#include "../shared_ref.h"
+#include "../smart_pointers.h"
 
 namespace Thor
 {

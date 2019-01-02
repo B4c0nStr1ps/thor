@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <thor/core/shared_ref.h>
+#include <thor/core/smart_pointers.h>
 
 struct SharedRefTester
 {
