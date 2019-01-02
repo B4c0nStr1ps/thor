@@ -11,6 +11,7 @@ addCppSource(ThorTester CPP_SOURCE_LIST "" tests_array_list.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_strings.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_shared_refs.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_hash_id.cpp)
+addCppSource(ThorTester CPP_SOURCE_LIST "" tests_functors.cpp)
 
 add_executable(ThorTester ${CPP_SOURCE_LIST} ${CPP_HEADER_LIST})
 target_link_libraries(ThorTester PRIVATE Thor)
