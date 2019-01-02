@@ -4,6 +4,10 @@
 #include "platform/platform.h"
 #include "allocator.h"
 #include "assertion.h"
+
+#ifndef USE_USER_FUNCTOR_ALLOCATOR
+#define FUNCTOR_DEFAULT_ALLOCATOR Thor::Allocators::DefaultAllocator
+#endif // !USE_USER_FUNCTOR_ALLOCATOR
  
 namespace Thor
 {
@@ -198,7 +202,7 @@ namespace Thor
 			template<typename T>
 			static void CreateFunctor(FunctorStorageType& storage, T&& functor)
 			{
-				Allocators::DefaultAllocator allocator;
+				FUNCTOR_DEFAULT_ALLOCATOR allocator;
 				Functor* func = static_cast<Functor*>(allocator.Allocate(sizeof(Functor), alignof(Functor)));				
 				//T_ASSERT(func != nullptr, "Allocation failed!");
 				T_ASSERT(func != nullptr);
@@ -211,7 +215,7 @@ namespace Thor
 				Functor* func = GetFunctorPtr(storage);
 				if (func)
 				{
-					Allocators::DefaultAllocator allocator;
+					FUNCTOR_DEFAULT_ALLOCATOR allocator;
 					func->~Functor();
 					allocator.Free(static_cast<void*>(func));
 				}
@@ -219,7 +223,7 @@ namespace Thor
 
 			static void CopyFunctor(FunctorStorageType& to, const FunctorStorageType& from)
 			{
-				Allocators::DefaultAllocator allocator;
+				FUNCTOR_DEFAULT_ALLOCATOR allocator;
 				Functor* func = static_cast<Functor*>(allocator.Allocate(sizeof(Functor), alignof(Functor)));
 				//T_ASSERT(func != nullptr, "Allocation failed!");
 				T_ASSERT(func != nullptr);
