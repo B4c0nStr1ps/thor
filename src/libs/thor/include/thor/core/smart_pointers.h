@@ -417,6 +417,135 @@ namespace Thor
 		AllocateSharedRefHelper(ret, refCount, refCount->GetValue());
 		return ret;
 	}
+
+	template <typename T, typename Allocator = Allocators::DefaultAllocator>
+	class UniquePtr
+	{
+	public:
+		typedef T									ElementType;
+		typedef UniquePtr<ElementType, Allocator>	ThisType;
+		typedef T*									PointerType;
+
+		/// These functions are deleted in order to prevent copying, for safety.
+		UniquePtr(const ThisType&) = delete;
+		UniquePtr& operator=(const ThisType&) = delete;
+		UniquePtr& operator=(PointerType pValue) = delete;
+
+		UniquePtr() noexcept
+			:m_value(nullptr)
+		{}
+
+		UniquePtr(NULLPTRTYPE) noexcept
+			:m_value(nullptr)
+		{}
+
+		explicit UniquePtr(PointerType value) noexcept
+			:m_value(value)
+		{}
+
+		ThisType& operator=(NULLPTRTYPE) noexcept
+		{
+			Reset();
+			return *this;
+		}
+
+		ThisType& operator=(ThisType&& other) noexcept
+		{
+			m_value = other.Release();
+			return *this;
+		}
+
+		~UniquePtr() noexcept
+		{
+			Reset();
+		}
+
+		PointerType Release() noexcept
+		{
+			PointerType tmp = m_value;
+			m_value = nullptr;
+			return tmp;
+		}
+
+		void Reset() noexcept
+		{
+			if (m_value != nullptr)
+			{
+				Allocator allocator;
+				allocator.Free(m_value);
+			}
+			m_value = nullptr;
+		}
+
+		PointerType operator->() const noexcept
+		{
+			return m_value;
+		}
+
+		typename std::add_lvalue_reference<ElementType>::type operator*() const
+		{
+			return *m_value;
+		}
+
+		PointerType Get() const noexcept
+		{
+			return m_value;
+		}
+		
+	private:
+		T* m_value = nullptr;
+	};
+
+	template <typename T, typename U>
+	inline bool operator==(const UniquePtr<T>& a, const UniquePtr<U>& b) noexcept
+	{
+		return (a.Get() == b.Get());
+	}
+
+	template <typename T, typename U>
+	inline bool operator!=(const UniquePtr<T>& a, const UniquePtr<U>& b) noexcept
+	{
+		return (a.Get() != b.Get());
+	}
+
+	template <typename T>
+	inline bool operator==(const UniquePtr<T>& a, NULLPTRTYPE) noexcept
+	{
+		return !a;
+	}
+
+	template <typename T>
+	inline bool operator==(NULLPTRTYPE, const UniquePtr<T>& b) noexcept
+	{
+		return !b;
+	}
+
+	template <typename T>
+	inline bool operator!=(const UniquePtr<T>& a, NULLPTRTYPE) noexcept
+	{
+		return static_cast<bool>(a);
+	}
+
+	template <typename T>
+	inline bool operator!=(NULLPTRTYPE, const UniquePtr<T>& b) noexcept
+	{
+		return static_cast<bool>(b);
+	}
+	
+	template <typename T, typename... Args>
+	UniquePtr<T> MakeUnique(Args&&... args)
+	{
+		return MakeUnique <T, Allocators::DefaultAllocator>(std::forward<Args>(args)...);
+	}
+
+	template <typename T, typename AllocatorType, typename... Args>
+	UniquePtr<T, AllocatorType> MakeUnique(Args&&... args)
+	{
+		AllocatorType allocator;
+		T* nakedPointer = allocator.New<T>(std::forward<Args>(args)...);
+		UniquePtr<T, AllocatorType> ret(nakedPointer);
+		return ret;
+	}
 }
 #endif // THOR_SMART_POINTERS_H_
 

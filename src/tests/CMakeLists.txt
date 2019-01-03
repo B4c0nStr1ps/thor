@@ -10,6 +10,7 @@ addCppSource(ThorTester CPP_SOURCE_LIST "" main.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_array_list.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_strings.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_shared_refs.cpp)
+addCppSource(ThorTester CPP_SOURCE_LIST "" tests_unique_ptr.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_hash_id.cpp)
 addCppSource(ThorTester CPP_SOURCE_LIST "" tests_functors.cpp)
 
